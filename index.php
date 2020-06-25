@@ -4,24 +4,6 @@ if(file_exists("feed/feed.xml")) {
     $rss_feed = simplexml_load_file("feed/feed.xml");
 }
 
-if(isset($_POST['feedoption'])) {
-    $feedOption = $_POST['feedoption'];
-} else {
-    $feedOption = 0;
-}
-
-function getFeedContent($URL){
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_URL, $URL);
-    $data = curl_exec($ch);
-    curl_close($ch);
-    return $data;
-}
-
-$feedUrl = $rss_feed->channel->item[(int)$feedOption]->link;
-$showContent = getFeedContent($feedUrl);
-
 ?>
 
 <!DOCTYPE html>
@@ -29,58 +11,53 @@ $showContent = getFeedContent($feedUrl);
 <head>
 <meta charset="utf-8">
 <title>RSS Feed</title>
-<link rel="stylesheet" type="text/css" href="style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 
-<div class="header">
-    <h2>RSS Feed</h2>
-</div>
+<div class="selection-container">
 
-<div class="flex-container">
+<h4>RSS Feed</h4>
 
-    <div class="form-feed">
+	<!-- form with select input that is getting filled with feeds -->
+    <div>
         <form action="" method="post" name="feedform">
-            <div class="custom-select">
-                <select name="feedoption" onchange="feedform.submit();">
-                    <option selected disabled>Please select one option</option>
-                    <?php
-                        if(!empty($rss_feed)) {
-                            $i=0;
-                            foreach ($rss_feed->channel->item as $feed_item) {
-                                echo "<option value='".$i."'>".$feed_item->title."</option>";
-                                $i += 1;
-                            }
+            <select name="feedoption" id="feedoption">
+                <option selected disabled>Please select one option</option>
+                <?php
+                    if(!empty($rss_feed)) {
+                        $i=0;
+                        foreach ($rss_feed->channel->item as $feed_item) {
+                            echo "<option value='".$i."'>".$feed_item->title."</option>";
+                            $i += 1;
                         }
-                    ?>
-                </select>
-            </div>
+                    }
+                ?>
+            </select>
         </form>
     </div>
 
-    <div class="show-feed">
-        <table>
-            <tr>
-                <?php
-                    echo "<th><strong>".$rss_feed->channel->item[(int)$feedOption]->title.
-                        "</strong></th>";
-                ?>
-            </tr>
-            <tr><td>
-                <a href="<?php echo $rss_feed->channel->item[(int)$feedOption]->link; ?>" target="_blank">
-                    <?php echo $rss_feed->channel->item[(int)$feedOption]->link; ?></a>
-            </td></tr>
-            <tr><td>
-                <?php echo $rss_feed->channel->item[(int)$feedOption]->description; ?>
-            </td></tr>
-        </table>
-    </div>
+<!-- feed page content -->
+<div id="show"></div>
 
-    <div class="show-content">
-        <?php echo $showContent; ?>
-    </div>
+<script>
+//AJAX function 
+$('#feedoption').on('change', function (e) {
 
-</div>
+    e.preventDefault();
+        $.ajax({
+        type: 'post',
+		url: 'reader.php',
+        data: $('#feedoption').serialize(),
+		success : function(returnData) {
+			var show = returnData;
+			$('#show').html(show);
+		}
+    });
+
+});
+</script>
 
 </body>
 </html>
