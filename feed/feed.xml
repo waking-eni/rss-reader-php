@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+	<title>PCGamer</title>
+    <link>https://www.pcgamer.com/</link>
+    <description>THE GLOBAL AUTHORITY ON PC GAMES</description>
+  <item>
+  <title>Valorant: When ranked mode launches in your region</title>
+  <link>https://www.pcgamer.com/valorant-ranked-release-date-time//</link>
+  <description>Riot is slowly rolling out Valorant's ranked mode across the world.</description>
+  </item>
+  <item>
+    <title>What's your favorite game world?</title>
+    <link>https://www.pcgamer.com/whats-your-favorite-game-world//</link>
+    <description>When you need an escape, what's your favorite spot to take a virtual vacation?</description>
+  </item>
+  <item>
+    <title>A lawsuit against the Internet Archive threatens vital gaming history</title>
+    <link>https://www.pcgamer.com/a-lawsuit-against-the-internet-archive-threatens-vital-gaming-history//</link>
+    <description>The Internet Archive is the only real resource of its kind for digital gaming history.</description>
+  </item>
+</channel>
+</rss>
