@@ -1,7 +1,12 @@
 <?php
 
-if(file_exists("feed/feed.xml")) {
-    $rss_feed = simplexml_load_file("feed/feed.xml");
+require_once __DIR__.'/curl/curl.php';
+$curl = new MyCurl();
+
+//use curl function with object serialization
+if(file_exists("feed.php")) {
+	$rss = $curl->getWithDecode("http://localhost/phpprojects/rss-reader-php/feed.php");
+    $rss_feed = simplexml_load_string($rss);
 }
 
 //was an option in select input selected?
@@ -12,17 +17,8 @@ if(isset($_POST['feedoption'])) {
 //get the URL from feed xml
 if(isset($feedOption)) {
 	$feedUrl = $rss_feed->channel->item[(int)$feedOption]->link;
-	$showContent = getFeedContent($feedUrl);
+	$showContent = $curl->getFeedContent($feedUrl);
 }
 
-//cURL function to retrieve page data from URL
-function getFeedContent($URL){
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_URL, $URL);
-    $data = curl_exec($ch);
-    curl_close($ch);
-    return $data;
-}
 
 echo $showContent;

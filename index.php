@@ -1,7 +1,12 @@
 <?php
+require_once __DIR__.'/curl/curl.php';
+$curl = new MyCurl();
 
-if(file_exists("feed/feed.xml")) {
-    $rss_feed = simplexml_load_file("feed/feed.xml");
+////use curl function with object serialization
+if(file_exists("feed.php")) {
+    $rss = $curl->getWithDecode("http://localhost/phpprojects/rss-reader-php/feed.php");
+    $rss_feed = simplexml_load_string($rss);
+	echo $rss_feed;
 }
 
 ?>
