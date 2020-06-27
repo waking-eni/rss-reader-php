@@ -3,7 +3,7 @@
 <rss version="2.0">
 <channel>
 	<title>PCGamer</title>
-    <link>https://www.pcgamer.com/</link>
+    <link>http://localhost/academy/rss-reader-php/feed.php/</link>
     <description>THE GLOBAL AUTHORITY ON PC GAMES</description>
   <item>
 	  <title>2 million people have played Ori and the Will of the Wisps since March</title>
